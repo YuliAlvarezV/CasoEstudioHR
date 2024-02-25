@@ -1,11 +1,6 @@
 import pandas as pd ### para manejo de datos
-import sqlite3 as sql #### para bases de datos sql
-import sys ## saber ruta de la que carga paquetes
 import matplotlib as mpl ## gráficos
 import matplotlib.pyplot as plt ### gráficos
-from pandas.plotting import scatter_matrix  ## para matriz de correlaciones
-from sklearn import tree ###para ajustar arboles de decisión
-from sklearn.tree import export_text ## para exportar reglas del árbol
 import plotly.express as px
 
 encuesta_empleados = 'https://raw.githubusercontent.com/YuliAlvarezV/CasoEstudioHR/main/employee_survey_data.csv'
