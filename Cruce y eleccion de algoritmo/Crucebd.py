@@ -5,6 +5,7 @@ import retirados as basert
 import sys ## saber ruta de la que carga paquetes
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import StandardScaler
 
 
 ###Ruta directorio qué tiene paquetes
@@ -110,3 +111,21 @@ result['resignationreason_encoded'].unique()
 
 Eliminar = ['BusinessTravel', 'EducationField', 'Department', 'Gender', 'JobRole', 'MaritalStatus', 'Attrition', 'retirementType', 'resignationReason']
 result = result.drop(Eliminar, axis=1)
+
+#####Separacion variable respuesta
+
+X = result.drop(['attrition_encoded'],axis= 1 )
+
+####Escalado
+
+# Inicializa el escalador
+scaler = StandardScaler()
+
+# Escala las variables del DataFrame
+df_scaled = scaler.fit_transform(X)
+
+# Crea un nuevo DataFrame con las variables escaladas
+df_scaled = pd.DataFrame(df_scaled, columns=result.columns)
+
+# Imprime el DataFrame resultante
+print(df_scaled)
