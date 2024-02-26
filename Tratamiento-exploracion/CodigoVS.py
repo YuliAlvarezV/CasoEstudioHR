@@ -24,10 +24,8 @@ from sklearn.tree import export_text ## para exportar reglas del árbol
 
 
 ### Cargar tablas de datos desde github ###
-
-general=("data//tbl_General.csv")  
    
-general='https://raw.githubusercontent.com/YuliAlvarezV/CasoEstudioHR/main/general_data.csv'
+general='https://raw.githubusercontent.com/YuliAlvarezV/CasoEstudioHR/main/Bases%20de%20datos/general_data.csv'
 
 df_general=pd.read_csv(general)
 df_general.columns

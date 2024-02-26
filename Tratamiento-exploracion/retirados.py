@@ -15,12 +15,14 @@ import seaborn as sns
 
 """##Cargar base de datos y eliminar columnas innecesarias"""
 
-from google.colab import drive
-drive.mount('/content/drive')
+#from google.colab import drive
+#drive.mount('/content/drive')
 
 # se carga la base de datos
-df_retirados = pd.read_csv("/content/drive/MyDrive/COLAB/retirement_info.csv") # se carga la base de datos
+df_retirados = "https://raw.githubusercontent.com/YuliAlvarezV/CasoEstudioHR/main/Bases%20de%20datos/retirement_info.csv"
+df_retirados = pd.read_csv(df_retirados)
 df_retirados
+
 
 ###Se eliminan columnas innecesarias
 df_retirados = df_retirados.drop(columns=['Unnamed: 0.1'])

@@ -12,20 +12,18 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Carga de datos
-from google.colab import drive
-drive.mount('/content/drive')
+#from google.colab import drive
+#drive.mount('/content/drive')
 
-manager = pd.read_csv("/content/drive/MyDrive/manager_survey.csv")
+manager = "https://raw.githubusercontent.com/YuliAlvarezV/CasoEstudioHR/main/Bases%20de%20datos/manager_survey.csv"
+manager = pd.read_csv(manager)
 manager
 
 #Identificamos número de filas y columnas
 manager.shape
 
-# Volvemos el nombre de las columnas a minúscula
-manager.columns = manager.columns.str.lower()
-
 #Eliminamos la columna Unnamed
-manager = manager.drop("unnamed: 0", axis = 1)
+manager = manager.drop("Unnamed: 0", axis = 1)
 manager.head(10)
 
 #Identificamos los tipos de columnas
@@ -37,9 +35,9 @@ manager.dtypes
 #surveydate fecha
 
 #Convertimos al  tipo correcto
-manager["surveydate"] = pd.to_datetime(manager["surveydate"])
-manager["jobinvolvement"] = pd.Categorical(manager["jobinvolvement"])
-manager["performancerating"] = pd.Categorical(manager["performancerating"])
+manager["SurveyDate"] = pd.to_datetime(manager["SurveyDate"])
+manager["JobInvolvement"] = pd.Categorical(manager["JobInvolvement"])
+manager["PerformanceRating"] = pd.Categorical(manager["PerformanceRating"])
 
 #Verificamos
 manager.dtypes
@@ -53,10 +51,10 @@ manager.duplicated().sum()
 """#**Jobinvolvement**"""
 
 #Miramos cada categoria
-manager["jobinvolvement"].value_counts()
+manager["JobInvolvement"].value_counts()
 
 #Gráfico de pastel
-jobinvolvement = manager["jobinvolvement"].value_counts()
+jobinvolvement = manager["JobInvolvement"].value_counts()
 
 # Crear un diccionario de mapeo de valores originales a nuevos nombres
 nuevos_nombres = {1: "Low", 2: "Medium", 3: "High", 4: "Very High"}
@@ -74,10 +72,10 @@ plt.show()  # Mostrar el gráfico
 """#**Performancerating**"""
 
 #Miramos cada categoria
-manager["performancerating"].value_counts()
+manager["PerformanceRating"].value_counts()
 
 #Gráfico de pastel
-performancerating = manager["performancerating"].value_counts()
+performancerating = manager["PerformanceRating"].value_counts()
 
 # Crear un diccionario de mapeo de valores originales a nuevos nombres
 nuevos_nombres = {3: "High", 4: "Very High"}
@@ -95,5 +93,5 @@ plt.show()  # Mostrar el gráfico
 """#**Surveydate**"""
 
 #Compración de los resultados cada año
-agrupado = manager.groupby(manager["surveydate"].dt.date)["jobinvolvement"].value_counts().reset_index(name='conteo')
+agrupado = manager.groupby(manager["SurveyDate"].dt.date)["JobInvolvement"].value_counts().reset_index(name='conteo')
 agrupado
