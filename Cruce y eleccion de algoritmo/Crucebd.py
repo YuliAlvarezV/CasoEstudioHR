@@ -118,14 +118,24 @@ X = result.drop(['attrition_encoded'],axis= 1 )
 
 ####Escalado
 
+#Cambiamos las variables a int
+X['JobInvolvement'] = X['JobInvolvement'].astype(int)
+X['PerformanceRating'] = X['PerformanceRating'].astype(int)
+X['EnvironmentSatisfaction'] = X['EnvironmentSatisfaction'].astype(int)
+X['JobSatisfaction'] = X['JobSatisfaction'].astype(int)
+X['WorkLifeBalance'] = X['WorkLifeBalance'].astype(int)
+
+#Seleccionamos las columnas que se escalan 
+columnas_a_escalar = ["Age","DistanceFromHome ", "Education", "JobLevel","MonthlyIncome", "NumCompaniesWorked", "PercentSalaryHike",
+                      "StandardHours", "StockOptionLevel", "TotalWorkingYears","TrainingTimesLastYear","YearsAtCompany","YearsSinceLastPromotion",
+                      "YearsWithCurrManager","JobInvolvement","PerformanceRating","JobSatisfaction","EnvironmentSatisfaction",
+                      "bussiness_encoded","education_encoded","department_encoded","gender_encoded","jobrole_encoded","maritalstatus_encoded",
+                      "retirementtype_encoded","resignationreason_encoded"]
+
 # Inicializa el escalador
 scaler = StandardScaler()
 
-# Escala las variables del DataFrame
-df_scaled = scaler.fit_transform(X)
-
-# Crea un nuevo DataFrame con las variables escaladas
-df_scaled = pd.DataFrame(df_scaled, columns=result.columns)
+X[columnas_a_escalar] = scaler.fit_transform(X[columnas_a_escalar])
 
 # Imprime el DataFrame resultante
-print(df_scaled)
+print(X)
