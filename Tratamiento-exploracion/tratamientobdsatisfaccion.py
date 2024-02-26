@@ -3,14 +3,17 @@ import matplotlib as mpl ## gráficos
 import matplotlib.pyplot as plt ### gráficos
 import plotly.express as px
 
-encuesta_empleados = 'https://raw.githubusercontent.com/YuliAlvarezV/CasoEstudioHR/main/employee_survey_data.csv'
+encuesta_empleados = 'https://raw.githubusercontent.com/YuliAlvarezV/CasoEstudioHR/main/Bases%20de%20datos/employee_survey_data.csv'
 
 df_empleados=pd.read_csv(encuesta_empleados)
-df_empleados = df_empleados.drop(columns=['Unnamed: 0'])
 
 ###### Verificar lectura correcta de los datos
 
 df_empleados.sort_values(by=['EmployeeID'],ascending=1)
+
+#### Se borra la columna Unnamed:0
+
+df_empleados = df_empleados.drop(columns=['Unnamed: 0'])
 
 ##### resumen con información tablas faltantes y tipos de variables y hacer correcciones
 
