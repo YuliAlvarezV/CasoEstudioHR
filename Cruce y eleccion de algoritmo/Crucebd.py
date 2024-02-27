@@ -4,13 +4,18 @@ import manager as basemg
 import retirados as basert
 import sys ## saber ruta de la que carga paquetes
 import pandas as pd
+import plotly as pt
+import seaborn
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import StandardScaler
-
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score 
 
 ###Ruta directorio qué tiene paquetes
 sys.path
-sys.path.append('C:\\Trabajo practico\\CasoEstudioHR\\Tratamiento-exploracion') ## este comanda agrega una ruta
+sys.path.append('C:\\Users\\yulia\\Desktop\\EntregaHRAnalitica\\CasoEstudioHR\\Tratamiento-exploracion') ## este comanda agrega una ruta
 
 general = basegen.df_general
 satisfaccion = basesat.df_filled
@@ -39,6 +44,7 @@ df_merge2015 = df_merge2015.merge(retirados_2015, on='EmployeeID', how='left')
 
 df_merge2015.shape
 df_merge2015.info()
+
 
 ##### Cruce de bds 2016
 
@@ -114,6 +120,7 @@ result = result.drop(Eliminar, axis=1)
 
 #####Separacion variable respuesta
 
+Y = result['attrition_encoded']
 X = result.drop(['attrition_encoded'],axis= 1 )
 
 ####Escalado
@@ -126,7 +133,7 @@ X['JobSatisfaction'] = X['JobSatisfaction'].astype(int)
 X['WorkLifeBalance'] = X['WorkLifeBalance'].astype(int)
 
 #Seleccionamos las columnas que se escalan 
-columnas_a_escalar = ["Age","DistanceFromHome ", "Education", "JobLevel","MonthlyIncome", "NumCompaniesWorked", "PercentSalaryHike",
+columnas_a_escalar = ["Age","DistanceFromHome", "Education", "JobLevel","MonthlyIncome", "NumCompaniesWorked", "PercentSalaryHike",
                       "StandardHours", "StockOptionLevel", "TotalWorkingYears","TrainingTimesLastYear","YearsAtCompany","YearsSinceLastPromotion",
                       "YearsWithCurrManager","JobInvolvement","PerformanceRating","JobSatisfaction","EnvironmentSatisfaction",
                       "bussiness_encoded","education_encoded","department_encoded","gender_encoded","jobrole_encoded","maritalstatus_encoded",
@@ -139,3 +146,12 @@ X[columnas_a_escalar] = scaler.fit_transform(X[columnas_a_escalar])
 
 # Imprime el DataFrame resultante
 print(X)
+X_Scaled=X[columnas_a_escalar]
+X_Scaled
+
+#Se dividen los datos en conjuntos de entrenamiento y validación. El 20% de los datos se utilizará para la validación.
+X_train, X_valid, y_train, y_valid = train_test_split(X_Scaled,Y,test_size = 0.2 ,stratify=Y, random_state= 1 )
+
+#Creamos y entrenamos el clasificador RandoForest en en los conjuntos
+classifier = RandomForestClassifier() 
+classifier.fit(X_train,y_train)
