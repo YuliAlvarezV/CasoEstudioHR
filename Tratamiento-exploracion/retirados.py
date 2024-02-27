@@ -52,6 +52,11 @@ df_retirados.isnull().sum()
 
 """##Contar cada variable y graficar"""
 
+#### Se elimina los registros con valor fired(despedidos) de la variable retirementType debido a que no aporta ningun valor
+#### para nuestro estudio, ya que se busca controlar las renuncias y no los despidos
+
+df_retirados = df_retirados.drop(df_retirados[df_retirados['retirementType'] == 'Fired'].index)
+
 #Contar los valores unicos de Attrition
 df_retirados['Attrition'].value_counts()
 
