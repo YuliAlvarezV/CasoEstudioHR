@@ -4,8 +4,11 @@ import manager as basemg
 import retirados as basert
 import sys ## saber ruta de la que carga paquetes
 import pandas as pd
+import plotly as pt
+import seaborn
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import StandardScaler
+import StandardScaler
 
 
 ###Ruta directorio qué tiene paquetes
@@ -39,6 +42,7 @@ df_merge2015 = df_merge2015.merge(retirados_2015, on='EmployeeID', how='left')
 
 df_merge2015.shape
 df_merge2015.info()
+
 
 ##### Cruce de bds 2016
 
