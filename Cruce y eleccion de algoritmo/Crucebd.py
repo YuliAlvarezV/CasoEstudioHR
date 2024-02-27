@@ -4,8 +4,6 @@ import manager as basemg
 import retirados as basert
 import sys ## saber ruta de la que carga paquetes
 import pandas as pd
-import plotly as pt
-import seaborn
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
@@ -15,7 +13,7 @@ from sklearn.metrics import accuracy_score
 
 ###Ruta directorio qué tiene paquetes
 sys.path
-sys.path.append('C:\Users\GOMEZ\Documents\2024-1\ANALITICA\CasoEstudioHR\Tratamiento-exploracion') ## este comanda agrega una ruta
+sys.path.append('C:\\Trabajo practico\\CasoEstudioHR\\Tratamiento-exploracion') ## este comanda agrega una ruta
 
 general = basegen.df_general
 satisfaccion = basesat.df_filled
@@ -58,65 +56,45 @@ df_merge2016.info()
 ############# Cruce base de BDs completas
 
 result = pd.concat([df_merge2015, df_merge2016])
+result
+
+
+#### Tratamiento de nulos en varible respuesta y variables de la tabla retirados
+
+result['Attrition'] = result['Attrition'].fillna('No')
+result['retirementType'] = result['retirementType'].fillna('No aplica')
+result['resignationReason'] = result['resignationReason'].fillna('No aplica')
+result['retirementDate'] = result['retirementDate'].fillna('No aplica')
+
 
 # Inicializa el LabelEncoder
 encoder = LabelEncoder()
 
-# Ajusta el LabelEncoder a la columna 'bussiness' y transforma las categorías en números
-result['bussiness_encoded'] = encoder.fit_transform(result['BusinessTravel'])
-result[['BusinessTravel','bussiness_encoded']]
-result['bussiness_encoded'].unique()
-
-result['education_encoded'] = encoder.fit_transform(result['EducationField'])
-result[['EducationField','education_encoded']]
-result['EducationField'].unique()
-result['education_encoded'].unique()
-
-result['department_encoded'] = encoder.fit_transform(result['Department'])
-result[['Department','department_encoded']]
-result['Department'].unique()
-result['department_encoded'].unique()
-
-result['gender_encoded'] = encoder.fit_transform(result['Gender'])
-result[['Gender','gender_encoded']]
-result['Gender'].unique()
-result['gender_encoded'].unique()
-
-result['jobrole_encoded'] = encoder.fit_transform(result['JobRole'])
-result[['JobRole','jobrole_encoded']]
-result['JobRole'].unique()
-result['jobrole_encoded'].unique()
-
-result['maritalstatus_encoded'] = encoder.fit_transform(result['MaritalStatus'])
-result[['MaritalStatus','maritalstatus_encoded']]
-result['MaritalStatus'].unique()
-result['maritalstatus_encoded'].unique()
-
-result.info()
-
-result['Attrition'] = result['Attrition'].fillna('No aplica')
-result['retirementType'] = result['Attrition'].fillna('No aplica')
-result['resignationReason'] = result['Attrition'].fillna('No aplica')
+######### Encoder para la variable respuesta
 
 result['attrition_encoded'] = encoder.fit_transform(result['Attrition'])
 result[['Attrition','attrition_encoded']]
 result['Attrition'].unique()
 result['attrition_encoded'].unique()
 
-result['retirementtype_encoded'] = encoder.fit_transform(result['retirementType'])
-result[['retirementType','retirementtype_encoded']]
-result['retirementType'].unique()
-result['retirementtype_encoded'].unique()
-
-result['resignationreason_encoded'] = encoder.fit_transform(result['resignationReason'])
-result[['resignationReason','resignationreason_encoded']]
-result['resignationReason'].unique()
-result['resignationreason_encoded'].unique()
-
 ######## Eliminacion de variables
 
-Eliminar = ['BusinessTravel', 'EducationField', 'Department', 'Gender', 'JobRole', 'MaritalStatus', 'Attrition', 'retirementType', 'resignationReason']
+Eliminar = ['Attrition', 'DateSurvey', 'retirementDate', 'InfoDate', 'SurveyDate', 'EmployeeID']
+#### dummies 'BusinessTravel', 'EducationField', 'Department', 'Gender', 'JobRole', 'MaritalStatus', 'retirementType', 'resignationReason
 result = result.drop(Eliminar, axis=1)
+result.info()
+
+result=result.astype({'EnvironmentSatisfaction': float})
+result=result.astype({'JobSatisfaction': float})
+result=result.astype({'WorkLifeBalance': float})
+result=result.astype({'JobInvolvement': float})
+result=result.astype({'PerformanceRating': float})
+
+### Dummies
+
+result = pd.get_dummies(result, dummy_na = True)
+result
+
 
 #####Separacion variable respuesta
 
@@ -133,8 +111,8 @@ X['JobSatisfaction'] = X['JobSatisfaction'].astype(int)
 X['WorkLifeBalance'] = X['WorkLifeBalance'].astype(int)
 
 #Seleccionamos las columnas que se escalan 
-columnas_a_escalar = ["Age","DistanceFromHome", "Education", "JobLevel","MonthlyIncome", "NumCompaniesWorked", "PercentSalaryHike",
-                      "StandardHours", "StockOptionLevel", "TotalWorkingYears","TrainingTimesLastYear","YearsAtCompany","YearsSinceLastPromotion",
+columnas_a_escalar = ["Age","DistanceFromHome", "Education", "JobLevel","MonthlyIncome", "PercentSalaryHike",
+                      "StandardHours", "StockOptionLevel","TrainingTimesLastYear","YearsAtCompany","YearsSinceLastPromotion",
                       "YearsWithCurrManager","JobInvolvement","PerformanceRating","JobSatisfaction","EnvironmentSatisfaction",
                       "bussiness_encoded","education_encoded","department_encoded","gender_encoded","jobrole_encoded","maritalstatus_encoded",
                       "retirementtype_encoded","resignationreason_encoded"]
@@ -163,8 +141,8 @@ preds = classifier.predict(X_valid)
 accuracy_score(preds,y_valid)
 
 # Seleccion automatica de caracterirsticas usando featurewiz  
-target = 'price_range' features, train = featurewiz(data, target, corr_limit= 0.7 , verbose= 2 , 
-        sep= "," , header= 0 ,test_data= "" , feature_engg= "" , category_encoders= "" )
+target = 'attrition_encoded'
+features, train = featurewiz(result, target, corr_limit= 0.7 , verbose= 2 , sep= "," , header= 0 ,test_data= "" , feature_engg= "" , category_encoders= "" )
 
 
 print(features)
