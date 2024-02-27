@@ -141,8 +141,13 @@ preds = classifier.predict(X_valid)
 accuracy_score(preds,y_valid)
 
 # Seleccion automatica de caracterirsticas usando featurewiz  
+<<<<<<< HEAD
 target = 'attrition_encoded'
 features, train = featurewiz(result, target, corr_limit= 0.7 , verbose= 2 , sep= "," , header= 0 ,test_data= "" , feature_engg= "" , category_encoders= "" )
+=======
+target = 'attrition_encoded' features, train = featurewiz(data, target, corr_limit= 0.7 , verbose= 2 , 
+        sep= "," , header= 0 ,test_data= "" , feature_engg= "" , category_encoders= "" )
+>>>>>>> 4ce571290dc56e85ce71bea5bd38d32cf935a146
 
 
 print(features)
