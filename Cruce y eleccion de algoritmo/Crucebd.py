@@ -15,7 +15,7 @@ from sklearn.metrics import accuracy_score
 
 ###Ruta directorio qué tiene paquetes
 sys.path
-sys.path.append('C:\\Users\\yulia\\Desktop\\EntregaHRAnalitica\\CasoEstudioHR\\Tratamiento-exploracion') ## este comanda agrega una ruta
+sys.path.append('C:\Users\GOMEZ\Documents\2024-1\ANALITICA\CasoEstudioHR\Tratamiento-exploracion') ## este comanda agrega una ruta
 
 general = basegen.df_general
 satisfaccion = basesat.df_filled
@@ -155,3 +155,16 @@ X_train, X_valid, y_train, y_valid = train_test_split(X_Scaled,Y,test_size = 0.2
 #Creamos y entrenamos el clasificador RandoForest en en los conjuntos
 classifier = RandomForestClassifier() 
 classifier.fit(X_train,y_train)
+
+# Realizar predicción 
+preds = classifier.predict(X_valid) 
+
+#Se valida el desempeño
+accuracy_score(preds,y_valid)
+
+# Seleccion automatica de caracterirsticas usando featurewiz  
+target = 'price_range' features, train = featurewiz(data, target, corr_limit= 0.7 , verbose= 2 , 
+        sep= "," , header= 0 ,test_data= "" , feature_engg= "" , category_encoders= "" )
+
+
+print(features)
