@@ -1,30 +1,23 @@
-import CodigoVS as basegen
-import tratamientobdsatisfaccion as basesat
-import manager as basemg
-import retirados as basert
-import funciones as func
 import sys ## saber ruta de la que carga paquetes
 import pandas as pd
-from sklearn.preprocessing import LabelEncoder
-from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score 
 import seaborn as sns
 import matplotlib.pyplot as plt
 
 
 ###Ruta directorio qué tiene paquetes
 sys.path
-sys.path.append('C:\Users\GOMEZ\Documents\2024-1\ANALITICA\CasoEstudioHR\Tratamiento-exploracion') ## este comanda agrega una ruta
+sys.path.append('C:\\Trabajo practico\\CasoEstudioHR\\Tratamiento-exploracion') ## este comanda agrega una ruta
+
+import CodigoVS as basegen
+import tratamientobdsatisfaccion as basesat
+import manager as basemg
+import retirados as basert
 
 
 general = basegen.df_general
 satisfaccion = basesat.df_filled
 manager = basemg.manager
 retirados = basert.df_retirados
-general.info()
 
 ##### Separación de datos por año
 
@@ -112,7 +105,6 @@ plt.title('Distribución de la Variable Respuesta por nivel de educación')
 
 # Mostrar el gráfico
 plt.show()
-
 
 #Variable Gender vs Atrittion
 # Crear el gráfico de barras apiladas utilizando Seaborn
@@ -263,61 +255,3 @@ plt.title('Comparación de Attrition con Número de años bajo el mando actual')
 
 # Mostrar el gráfico
 plt.show()
-
-# Inicializa el LabelEncoder
-encoder = LabelEncoder()
-
-######### Encoder para la variable respuesta
-
-result['attrition_encoded'] = encoder.fit_transform(result['Attrition'])
-result[['Attrition','attrition_encoded']]
-result['Attrition'].unique()
-result['attrition_encoded'].unique()
-
-######## Eliminacion de variables
-
-Eliminar = ['Attrition', 'DateSurvey', 'retirementDate', 'InfoDate', 'SurveyDate', 'EmployeeID']
-#### dummies 'BusinessTravel', 'EducationField', 'Department', 'Gender', 'JobRole', 'MaritalStatus', 'retirementType', 'resignationReason
-result = result.drop(Eliminar, axis=1)
-result.info()
-
-result=result.astype({'EnvironmentSatisfaction': int})
-result=result.astype({'JobSatisfaction': int})
-result=result.astype({'WorkLifeBalance': int})
-result=result.astype({'JobInvolvement': int})
-result=result.astype({'PerformanceRating': int})
-
-### Dummies
-
-result = pd.get_dummies(result, dummy_na = True)
-result
-
-
-#####Separacion variable respuesta
-
-Y = result['attrition_encoded']
-X = result.drop(['attrition_encoded'],axis= 1 )
-X.info()
-
-####Escalado
-
-#Seleccionamos las columnas que se escalan 
-columnas_a_escalar = ["Age","DistanceFromHome", "MonthlyIncome", 'NumCompaniesWorked', "PercentSalaryHike"
-                    , "StockOptionLevel", 'TotalWorkingYears',"TrainingTimesLastYear","YearsAtCompany","YearsSinceLastPromotion",
-                    "YearsWithCurrManager","JobInvolvement","PerformanceRating","JobSatisfaction","EnvironmentSatisfaction", 'WorkLifeBalance']
-
-# Inicializa el escalador
-##scaler = StandardScaler()
-
-##X[columnas_a_escalar] = scaler.fit_transform(X[columnas_a_escalar])
-
-# escaralar variables
-
-func.escalado(X, columnas_a_escalar)
-
-# Imprime el DataFrame resultante
-print(X)
-
-#Se dividen los datos en conjuntos de entrenamiento y validación. El 20% de los datos se utilizará para la validación.
-X_train, X_valid, y_train, y_valid = train_test_split(X,Y,test_size = 0.2 ,stratify=Y, random_state= 1 )
-

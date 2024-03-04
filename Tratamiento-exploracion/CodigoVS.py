@@ -28,6 +28,7 @@ df_general.info(verbose=True)
 
 df_general['TotalWorkingYears'] = df_general['TotalWorkingYears'].fillna(df_general['TotalWorkingYears'].mean())
 df_general['NumCompaniesWorked'] = df_general['NumCompaniesWorked'].fillna(df_general['NumCompaniesWorked'].mean())
+
 ###Confirmamos los cambios
 df_general.info(verbose=True)
 
@@ -40,10 +41,6 @@ df_general=df_general.astype({'JobLevel': object,"JobLevel": object})
 
 ###Eliminar columnas que no se utilicen
 df_general=df_general.drop(['Unnamed: 0','StandardHours', 'Over18', 'EmployeeCount'], axis=1) # Unnamed no aporta datos relevantes, #EmployeeCount siempre sera 1,#Standard Hours siempre sera 8 y no b rinda mayor diferenciación para el analisis y Over18 tiene el mismo valor para todos ya que todos son mayores de edad
-
-####explorar variables numéricas con histograma
-fig=df_general.hist(bins=50, figsize=(40,30),grid=False,ec='black')
-plt.show()
 
 ####explorar variables categoricas
 BT = df_general["BusinessTravel"].value_counts()
