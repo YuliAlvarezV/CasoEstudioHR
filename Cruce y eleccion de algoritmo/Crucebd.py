@@ -84,38 +84,30 @@ Eliminar = ['Attrition', 'DateSurvey', 'retirementDate', 'InfoDate', 'SurveyDate
 result = result.drop(Eliminar, axis=1)
 result.info()
 
-result=result.astype({'EnvironmentSatisfaction': float})
-result=result.astype({'JobSatisfaction': float})
-result=result.astype({'WorkLifeBalance': float})
-result=result.astype({'JobInvolvement': float})
-result=result.astype({'PerformanceRating': float})
+result=result.astype({'EnvironmentSatisfaction': int})
+result=result.astype({'JobSatisfaction': int})
+result=result.astype({'WorkLifeBalance': int})
+result=result.astype({'JobInvolvement': int})
+result=result.astype({'PerformanceRating': int})
 
 ### Dummies
 
 result = pd.get_dummies(result, dummy_na = True)
 result
 
-
 #####Separacion variable respuesta
 
 Y = result['attrition_encoded']
 X = result.drop(['attrition_encoded'],axis= 1 )
+X.info()
+X['']
 
 ####Escalado
 
-#Cambiamos las variables a int
-X['JobInvolvement'] = X['JobInvolvement'].astype(int)
-X['PerformanceRating'] = X['PerformanceRating'].astype(int)
-X['EnvironmentSatisfaction'] = X['EnvironmentSatisfaction'].astype(int)
-X['JobSatisfaction'] = X['JobSatisfaction'].astype(int)
-X['WorkLifeBalance'] = X['WorkLifeBalance'].astype(int)
-
 #Seleccionamos las columnas que se escalan 
-columnas_a_escalar = ["Age","DistanceFromHome", "Education", "JobLevel","MonthlyIncome", "PercentSalaryHike",
-                      "StandardHours", "StockOptionLevel","TrainingTimesLastYear","YearsAtCompany","YearsSinceLastPromotion",
-                      "YearsWithCurrManager","JobInvolvement","PerformanceRating","JobSatisfaction","EnvironmentSatisfaction",
-                      "bussiness_encoded","education_encoded","department_encoded","gender_encoded","jobrole_encoded","maritalstatus_encoded",
-                      "retirementtype_encoded","resignationreason_encoded"]
+columnas_a_escalar = ["Age","DistanceFromHome", "Education", "JobLevel", "MonthlyIncome", 'NumCompaniesWorked', "PercentSalaryHike"
+                      , "StockOptionLevel", 'TotalWorkingYears',"TrainingTimesLastYear","YearsAtCompany","YearsSinceLastPromotion",
+                      "YearsWithCurrManager","JobInvolvement","PerformanceRating","JobSatisfaction","EnvironmentSatisfaction", 'WorkLifeBalance']
 
 # Inicializa el escalador
 scaler = StandardScaler()
@@ -124,11 +116,9 @@ X[columnas_a_escalar] = scaler.fit_transform(X[columnas_a_escalar])
 
 # Imprime el DataFrame resultante
 print(X)
-X_Scaled=X[columnas_a_escalar]
-X_Scaled
 
 #Se dividen los datos en conjuntos de entrenamiento y validación. El 20% de los datos se utilizará para la validación.
-X_train, X_valid, y_train, y_valid = train_test_split(X_Scaled,Y,test_size = 0.2 ,stratify=Y, random_state= 1 )
+X_train, X_valid, y_train, y_valid = train_test_split(X,Y,test_size = 0.2 ,stratify=Y, random_state= 1 )
 
 #Creamos y entrenamos el clasificador RandoForest en en los conjuntos
 classifier = RandomForestClassifier() 
@@ -139,15 +129,3 @@ preds = classifier.predict(X_valid)
 
 #Se valida el desempeño
 accuracy_score(preds,y_valid)
-
-# Seleccion automatica de caracterirsticas usando featurewiz  
-<<<<<<< HEAD
-target = 'attrition_encoded'
-features, train = featurewiz(result, target, corr_limit= 0.7 , verbose= 2 , sep= "," , header= 0 ,test_data= "" , feature_engg= "" , category_encoders= "" )
-=======
-target = 'attrition_encoded' features, train = featurewiz(data, target, corr_limit= 0.7 , verbose= 2 , 
-        sep= "," , header= 0 ,test_data= "" , feature_engg= "" , category_encoders= "" )
->>>>>>> 4ce571290dc56e85ce71bea5bd38d32cf935a146
-
-
-print(features)
