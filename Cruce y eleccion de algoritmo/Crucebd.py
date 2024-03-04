@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 
 ###Ruta directorio qué tiene paquetes
 sys.path
-sys.path.append('C:\\Trabajo practico\\CasoEstudioHR\\Tratamiento-exploracion') ## este comanda agrega una ruta
+sys.path.append('C:\Users\GOMEZ\Documents\2024-1\ANALITICA\CasoEstudioHR\Tratamiento-exploracion') ## este comanda agrega una ruta
 
 general = basegen.df_general
 satisfaccion = basesat.df_filled
@@ -171,6 +171,95 @@ plt.title('Comparación de Attrition con distancia de casa')
 # Mostrar el gráfico
 plt.show()
 
+#Variable MonthlyIncome vs Atrittion
+# Crear el gráfico de caja para comparar "Attrition" con "MonthlyIncome"
+sns.boxplot(x='Attrition', y='MonthlyIncome', data=result)
+
+# Añadir título al gráfico
+plt.title('Comparación de Attrition con Ingreso mensual en Rupias')
+
+# Mostrar el gráfico
+plt.show()
+
+#Variable NumCompaniesWorked vs Atrittion
+# Crear el gráfico de caja para comparar "Attrition" con "NumCompaniesWorked"
+sns.boxplot(x='Attrition', y='NumCompaniesWorked', data=result)
+
+# Añadir título al gráfico
+plt.title('Comparación de Attrition con Número total de empresas para las que ha trabajado el empleado')
+
+# Mostrar el gráfico
+plt.show()
+
+#Variable PercentSalaryHike vs Atrittion
+# Crear el gráfico de caja para comparar "Attrition" con "PercentSalaryHike"
+sns.boxplot(x='Attrition', y='PercentSalaryHike', data=result)
+
+# Añadir título al gráfico
+plt.title('Comparación de Attrition con Aumento salarial porcentual del año pasado')
+
+# Mostrar el gráfico
+plt.show()
+
+#Variable StockOptionLevel vs Atrittion
+# Crear el gráfico de caja para comparar "Attrition" con "StockOptionLevel"
+sns.boxplot(x='Attrition', y='StockOptionLevel', data=result)
+
+# Añadir título al gráfico
+plt.title('Comparación de Attrition con Nivel de opción de compra del empleado')
+
+# Mostrar el gráfico
+plt.show()
+
+#Variable TotalWorkingYears vs Atrittion
+# Crear el gráfico de caja para comparar "Attrition" con "TotalWorkingYears"
+sns.boxplot(x='Attrition', y='TotalWorkingYears', data=result)
+
+# Añadir título al gráfico
+plt.title('Comparación de Attrition con Número total de años que el empleado ha trabajado hasta el momento')
+
+# Mostrar el gráfico
+plt.show()
+
+#Variable TrainingTimesLastYear vs Atrittion
+# Crear el gráfico de caja para comparar "Attrition" con "TrainingTimesLastYear"
+sns.boxplot(x='Attrition', y='TrainingTimesLastYear', data=result)
+
+# Añadir título al gráfico
+plt.title('Comparación de Attrition con Número de veces que se realizó capacitación para este empleado el año pasado')
+
+# Mostrar el gráfico
+plt.show()
+
+#Variable YearsAtCompany vs Atrittion
+# Crear el gráfico de caja para comparar "Attrition" con "YearsAtCompany"
+sns.boxplot(x='Attrition', y='YearsAtCompany', data=result)
+
+# Añadir título al gráfico
+plt.title('Comparación de Attrition con Número total de años que el empleado ha permanecido en la empresa')
+
+# Mostrar el gráfico
+plt.show()
+
+#Variable YearsSinceLastPromotion vs Atrittion
+# Crear el gráfico de caja para comparar "Attrition" con "YearsSinceLastPromotion"
+sns.boxplot(x='Attrition', y='YearsSinceLastPromotion', data=result)
+
+# Añadir título al gráfico
+plt.title('Comparación de Attrition con Número de años desde la última promoción')
+
+# Mostrar el gráfico
+plt.show()
+
+#Variable YearsWithCurrManager vs Atrittion
+# Crear el gráfico de caja para comparar "Attrition" con "YearsWithCurrManager"
+sns.boxplot(x='Attrition', y='YearsWithCurrManager', data=result)
+
+# Añadir título al gráfico
+plt.title('Comparación de Attrition con Número de años bajo el mando actual')
+
+# Mostrar el gráfico
+plt.show()
 
 # Inicializa el LabelEncoder
 encoder = LabelEncoder()
