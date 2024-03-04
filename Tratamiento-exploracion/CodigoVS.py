@@ -37,7 +37,7 @@ df_general["InfoDate"]=pd.to_datetime(df_general['InfoDate'])
 df_general=df_general.astype({'EmployeeID': object,"EmployeeID": object})
 df_general=df_general.astype({'Education': object,"Education": object})
 df_general=df_general.astype({'JobLevel': object,"JobLevel": object})
-df_general=df_general.astype({'InfoDate': object,"InfoDate": object})
+
 ###Eliminar columnas que no se utilicen
 df_general=df_general.drop(['Unnamed: 0','StandardHours', 'Over18', 'EmployeeCount'], axis=1) # Unnamed no aporta datos relevantes, #EmployeeCount siempre sera 1,#Standard Hours siempre sera 8 y no b rinda mayor diferenciación para el analisis y Over18 tiene el mismo valor para todos ya que todos son mayores de edad
 

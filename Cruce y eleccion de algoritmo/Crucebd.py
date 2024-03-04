@@ -2,6 +2,7 @@ import CodigoVS as basegen
 import tratamientobdsatisfaccion as basesat
 import manager as basemg
 import retirados as basert
+import funciones as func
 import sys ## saber ruta de la que carga paquetes
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
@@ -18,10 +19,12 @@ import matplotlib.pyplot as plt
 sys.path
 sys.path.append('C:\Users\GOMEZ\Documents\2024-1\ANALITICA\CasoEstudioHR\Tratamiento-exploracion') ## este comanda agrega una ruta
 
+
 general = basegen.df_general
 satisfaccion = basesat.df_filled
 manager = basemg.manager
 retirados = basert.df_retirados
+general.info()
 
 ##### Separación de datos por año
 
@@ -295,19 +298,22 @@ result
 Y = result['attrition_encoded']
 X = result.drop(['attrition_encoded'],axis= 1 )
 X.info()
-X['']
 
 ####Escalado
 
 #Seleccionamos las columnas que se escalan 
-columnas_a_escalar = ["Age","DistanceFromHome", "Education", "JobLevel", "MonthlyIncome", 'NumCompaniesWorked', "PercentSalaryHike"
-                      , "StockOptionLevel", 'TotalWorkingYears',"TrainingTimesLastYear","YearsAtCompany","YearsSinceLastPromotion",
-                      "YearsWithCurrManager","JobInvolvement","PerformanceRating","JobSatisfaction","EnvironmentSatisfaction", 'WorkLifeBalance']
+columnas_a_escalar = ["Age","DistanceFromHome", "MonthlyIncome", 'NumCompaniesWorked', "PercentSalaryHike"
+                    , "StockOptionLevel", 'TotalWorkingYears',"TrainingTimesLastYear","YearsAtCompany","YearsSinceLastPromotion",
+                    "YearsWithCurrManager","JobInvolvement","PerformanceRating","JobSatisfaction","EnvironmentSatisfaction", 'WorkLifeBalance']
 
 # Inicializa el escalador
-scaler = StandardScaler()
+##scaler = StandardScaler()
 
-X[columnas_a_escalar] = scaler.fit_transform(X[columnas_a_escalar])
+##X[columnas_a_escalar] = scaler.fit_transform(X[columnas_a_escalar])
+
+# escaralar variables
+
+func.escalado(X, columnas_a_escalar)
 
 # Imprime el DataFrame resultante
 print(X)
@@ -315,12 +321,3 @@ print(X)
 #Se dividen los datos en conjuntos de entrenamiento y validación. El 20% de los datos se utilizará para la validación.
 X_train, X_valid, y_train, y_valid = train_test_split(X,Y,test_size = 0.2 ,stratify=Y, random_state= 1 )
 
-#Creamos y entrenamos el clasificador RandoForest en en los conjuntos
-classifier = RandomForestClassifier() 
-classifier.fit(X_train,y_train)
-
-# Realizar predicción 
-preds = classifier.predict(X_valid) 
-
-#Se valida el desempeño
-accuracy_score(preds,y_valid)
