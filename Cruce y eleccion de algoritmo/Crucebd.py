@@ -10,6 +10,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score 
+import seaborn as sns
+import matplotlib.pyplot as plt
+
 
 ###Ruta directorio qué tiene paquetes
 sys.path
@@ -66,6 +69,108 @@ result['retirementType'] = result['retirementType'].fillna('No aplica')
 result['resignationReason'] = result['resignationReason'].fillna('No aplica')
 result['retirementDate'] = result['retirementDate'].fillna('No aplica')
 
+###ANALISIS BIVARIADO DE TABLA GENERAL Y VARIABLE RESPUESTA#######
+#Variable BusinessTravel vs Atrittion
+# Crear el gráfico de barras apiladas utilizando Seaborn
+sns.countplot(x='BusinessTravel', hue='Attrition', data=result)
+
+# Añadir título al gráfico
+plt.title('Distribución de la Variable Respuesta por Viajes')
+
+# Mostrar el gráfico
+plt.show()
+
+#Variable Department vs Atrittion
+# Crear el gráfico de barras apiladas utilizando Seaborn
+sns.countplot(x='Department', hue='Attrition', data=result)
+
+# Añadir título al gráfico
+plt.title('Distribución de la Variable Respuesta por Departamento')
+
+# Mostrar el gráfico
+plt.show()
+
+#Variable EducationField vs Atrittion
+# Crear el gráfico de barras apiladas utilizando Seaborn
+sns.countplot(x='EducationField', hue='Attrition', data=result)
+
+# Añadir título al gráfico
+plt.title('Distribución de la Variable Respuesta por Campo de estudio')
+
+# Mostrar el gráfico
+plt.show()
+
+#Variable Education vs Atrittion
+# Crear el gráfico de barras apiladas utilizando Seaborn
+sns.countplot(x='Education', hue='Attrition', data=result)
+
+# Añadir título al gráfico
+plt.title('Distribución de la Variable Respuesta por nivel de educación')
+
+# Mostrar el gráfico
+plt.show()
+
+
+#Variable Gender vs Atrittion
+# Crear el gráfico de barras apiladas utilizando Seaborn
+sns.countplot(x='Gender', hue='Attrition', data=result)
+
+# Añadir título al gráfico
+plt.title('Distribución de la Variable Respuesta por genero')
+
+# Mostrar el gráfico
+plt.show()
+
+#Variable JobLevel vs Atrittion
+# Crear el gráfico de barras apiladas utilizando Seaborn
+sns.countplot(x='JobLevel', hue='Attrition', data=result)
+
+# Añadir título al gráfico
+plt.title('Distribución de la Variable Respuesta por nivel de trabajo')
+
+# Mostrar el gráfico
+plt.show()
+
+#Variable JobRole vs Atrittion
+# Crear el gráfico de barras apiladas utilizando Seaborn
+sns.countplot(x='JobRole', hue='Attrition', data=result)
+
+# Añadir título al gráfico
+plt.title('Distribución de la Variable Respuesta por Rol')
+
+# Mostrar el gráfico
+plt.show()
+
+#Variable MaritalStatus vs Atrittion
+# Crear el gráfico de barras apiladas utilizando Seaborn
+sns.countplot(x='MaritalStatus', hue='Attrition', data=result)
+
+# Añadir título al gráfico
+plt.title('Distribución de la Variable Respuesta por Estado civil')
+
+# Mostrar el gráfico
+plt.show()
+
+#Variable Age vs Atrittion
+# Crear el gráfico de caja para comparar "Attrition" con "Age"
+sns.boxplot(x='Attrition', y='Age', data=result)
+
+# Añadir título al gráfico
+plt.title('Comparación de Attrition con Age')
+
+# Mostrar el gráfico
+plt.show()
+
+#Variable DistanceFromHome vs Atrittion
+# Crear el gráfico de caja para comparar "Attrition" con "Age"
+sns.boxplot(x='Attrition', y='DistanceFromHome', data=result)
+
+# Añadir título al gráfico
+plt.title('Comparación de Attrition con distancia de casa')
+
+# Mostrar el gráfico
+plt.show()
+
 
 # Inicializa el LabelEncoder
 encoder = LabelEncoder()
@@ -94,6 +199,7 @@ result=result.astype({'PerformanceRating': int})
 
 result = pd.get_dummies(result, dummy_na = True)
 result
+
 
 #####Separacion variable respuesta
 

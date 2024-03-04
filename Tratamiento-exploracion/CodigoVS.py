@@ -35,7 +35,9 @@ df_general.info(verbose=True)
 df_general["InfoDate"]=pd.to_datetime(df_general['InfoDate'])
 #### convertir a categórica
 df_general=df_general.astype({'EmployeeID': object,"EmployeeID": object})
-
+df_general=df_general.astype({'Education': object,"Education": object})
+df_general=df_general.astype({'JobLevel': object,"JobLevel": object})
+df_general=df_general.astype({'InfoDate': object,"InfoDate": object})
 ###Eliminar columnas que no se utilicen
 df_general=df_general.drop(['Unnamed: 0','StandardHours', 'Over18', 'EmployeeCount'], axis=1) # Unnamed no aporta datos relevantes, #EmployeeCount siempre sera 1,#Standard Hours siempre sera 8 y no b rinda mayor diferenciación para el analisis y Over18 tiene el mismo valor para todos ya que todos son mayores de edad
 
@@ -62,6 +64,16 @@ plt.title("Departamento donde trabaja")  # Título del gráfico
 
 plt.show()
 
+Education=df_general['Education'].value_counts()
+# Crear un gráfico de pastel
+plt.figure(figsize=(8, 8))  # Tamaño del gráfico
+plt.pie(Education, labels= Education.index, autopct='%1.1f%%', startangle=140)  # Crear gráfico de pastel
+plt.axis('equal')  # Aspecto de círculo
+plt.title("Nivel de Estudios")  # Título del gráfico
+
+plt.show()
+
+
 EducationField=df_general['EducationField'].value_counts()
 # Crear un gráfico de pastel
 plt.figure(figsize=(8, 8))  # Tamaño del gráfico
@@ -86,6 +98,15 @@ plt.figure(figsize=(8, 8))  # Tamaño del gráfico
 plt.pie(JobRole, labels= JobRole.index, autopct='%1.1f%%', startangle=140)  # Crear gráfico de pastel
 plt.axis('equal')  # Aspecto de círculo
 plt.title("Posición del empleado")  # Título del gráfico
+
+plt.show()
+
+JobLevel=df_general['JobLevel'].value_counts()
+# Crear un gráfico de pastel
+plt.figure(figsize=(8, 8))  # Tamaño del gráfico
+plt.pie(JobLevel, labels= JobLevel.index, autopct='%1.1f%%', startangle=140)  # Crear gráfico de pastel
+plt.axis('equal')  # Aspecto de círculo
+plt.title("Nivel de trabajo")  # Título del gráfico
 
 plt.show()
 
