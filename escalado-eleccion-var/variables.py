@@ -108,7 +108,7 @@ print(X_test)
 
 ### Elección de variables
 
-m_lreg = LogisticRegression()
+m_lreg = LogisticRegression(max_iter=200)
 m_rtree= DecisionTreeClassifier()
 m_rf= RandomForestClassifier()
 m_gbc = GradientBoostingClassifier()

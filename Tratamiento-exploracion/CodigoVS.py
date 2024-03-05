@@ -1,6 +1,6 @@
 #### Cargar paquetes siempre al inicio
 
-import pandas as pd   ### para manejo de datos
+import pandas as pd   ### para manejo de datos{}
 import sqlite3 as sql #### para bases de datos sql
 import matplotlib as mpl ## gráficos
 import matplotlib.pyplot as plt ### gráficos
