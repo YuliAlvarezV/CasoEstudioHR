@@ -8,7 +8,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score
+import matplotlib.pyplot as plt ### gráficos
 import Crucebd as bd
 
 ###Ruta directorio qué tiene paquetes
@@ -115,6 +115,24 @@ var_names=func.sel_variables(modelos,X_train,Y,threshold="2*mean")
 var_names.shape
 
 X2=X_train[var_names] ### matriz con variables seleccionadas
-X2.info()
-X_train.info()
+X2.info()  #### Variables seleccionadas 
+X_train.info() ##### Todas las variables
 
+##### Seleccion del mejor modelo probando con todas las variables y las seleccionadas
+
+acc_X_train = func.medir_modelos(modelos,"f1",X_train,Y,21) ## score con la base con todas las variables
+acc_X2= func.medir_modelos(modelos,"f1",X2,Y,21) ### score con la base con variables seleccionadas
+
+acc=pd.concat([acc_X_train,acc_X2],axis=1)
+acc.columns=['m_lreg', 'm_dtree', 'm_rf','m_gbc','lreg_sel','rtree_sel', 'rf_sel','gbc_sel']
+
+acc_X_train.plot(kind='box') #### gráfico para modelos todas las varibles
+plt.show()
+
+acc_X2.plot(kind='box') ### gráfico para modelo variables seleccionadas
+plt.show()
+
+acc.plot(kind='box') ### gráfico para modelos sel y todas las variables
+plt.show()
+
+acc.mean()
