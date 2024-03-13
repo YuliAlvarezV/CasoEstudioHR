@@ -11,7 +11,6 @@ Original file is located at
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 """##Cargar base de datos y eliminar columnas innecesarias"""
 
@@ -45,53 +44,16 @@ df_retirados = df_retirados.astype({'EmployeeID': object})
 ##Se cuentan los nulos
 df_retirados.isnull().sum()
 
-##Se cambian los nulos de la columna resignationReason por 'Others'
-df_retirados['resignationReason'] = df_retirados['resignationReason'].fillna('Others')
-
-df_retirados.isnull().sum()
-
-"""##Contar cada variable y graficar"""
-
 #### Se elimina los registros con valor fired(despedidos) de la variable retirementType debido a que no aporta ningun valor
 #### para nuestro estudio, ya que se busca controlar las renuncias y no los despidos
 
 df_retirados = df_retirados.drop(df_retirados[df_retirados['retirementType'] == 'Fired'].index)
 
-#Contar los valores unicos de Attrition
-df_retirados['Attrition'].value_counts()
+##Se quita la variable resignationReason y  debido a que esta varible solo nos dice la razon de retiros, y llenarlo con otra variable los nulos los que haria es llenar los registros que no se retiraron, por lo que no nos interesa tener estas variables en el modelo
+df_retirados = df_retirados.drop(['resignationReason'], axis=1)
+df_retirados = df_retirados.drop(['retirementType'], axis=1)
 
-#Contar los valores unicos de retirementType
-df_retirados['retirementType'].value_counts()
-
-#Contar los valores unicos de resignationReason
-df_retirados['resignationReason'].value_counts()
+df_retirados.isnull().sum()
 
 ##Contar los valores unicos de retirementDate
 df_retirados['retirementDate'].value_counts()
-
-#Agregar nueva columna para agrupar fechas por año
-#Fecha_año = df_retirados
-#Fecha_año['Año'] = pd.DatetimeIndex(Fecha_año['retirementDate']).year
-#Fecha_año.groupby("Año").count().agg("EmployeeID")
-
-#Gráfico de pastel retirementType
-retirementType = df_retirados["retirementType"].value_counts()
-
-# Crear un gráfico de pastel
-plt.figure(figsize=(8, 8))  # Tamaño del gráfico
-plt.pie(retirementType, labels= retirementType.index, autopct='%1.1f%%', startangle=140)  # Crear gráfico de pastel
-plt.axis('equal')  # Aspecto de círculo
-plt.title("Porcentaje de tipo de retiro")  # Título del gráfico
-
-plt.show()
-
-#Gráfico de pastel resignationReason
-resignationReason = df_retirados["resignationReason"].value_counts()
-
-# Crear un gráfico de pastel
-plt.figure(figsize=(8, 8))  # Tamaño del gráfico
-plt.pie(resignationReason, labels= resignationReason.index, autopct='%1.1f%%', startangle=140)  # Crear gráfico de pastel
-plt.axis('equal')  # Aspecto de círculo
-plt.title("Porcentaje de razon de retiro")  # Título del gráfico
-
-plt.show()

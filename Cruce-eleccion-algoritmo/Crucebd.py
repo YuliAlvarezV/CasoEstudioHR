@@ -61,8 +61,6 @@ result
 #### Tratamiento de nulos en varible respuesta y variables de la tabla retirados
 
 result['Attrition'] = result['Attrition'].fillna('No')
-result['retirementType'] = result['retirementType'].fillna('No aplica')
-result['resignationReason'] = result['resignationReason'].fillna('No aplica')
 result['retirementDate'] = result['retirementDate'].fillna('No aplica')
 
 ###ANALISIS BIVARIADO DE TABLA GENERAL Y VARIABLE RESPUESTA#######

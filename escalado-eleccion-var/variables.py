@@ -15,9 +15,6 @@ import Crucebd as bd
 sys.path
 sys.path.append('C:\\Trabajo practico\\CasoEstudioHR\\Cruce-eleccion-algoritmo') ## este comanda agrega una ruta
 
-# Inicializa el LabelEncoder
-encoder = LabelEncoder()
-
 ### Se importa datos de 2015 y 2016
 
 df_merge2015 = bd.df_merge2015
@@ -27,14 +24,13 @@ df_merge2016 = bd.df_merge2016
 
 df_merge2015['Attrition'] = df_merge2015['Attrition'].fillna('No')
 df_merge2016['Attrition'] = df_merge2016['Attrition'].fillna('No')
-df_merge2015['retirementType'] = df_merge2015['retirementType'].fillna('No aplica')
-df_merge2016['retirementType'] = df_merge2016['retirementType'].fillna('No aplica')
-df_merge2015['resignationReason'] = df_merge2015['resignationReason'].fillna('No aplica')
-df_merge2016['resignationReason'] = df_merge2016['resignationReason'].fillna('No aplica')
 df_merge2015['retirementDate'] = df_merge2015['retirementDate'].fillna('No aplica')
 df_merge2016['retirementDate'] = df_merge2016['retirementDate'].fillna('No aplica')
 
 ######### Encoder para la variable respuesta
+
+# Inicializa el LabelEncoder
+encoder = LabelEncoder()
 
 df_merge2015['attrition_encoded'] = encoder.fit_transform(df_merge2015['Attrition'])
 df_merge2016['attrition_encoded'] = encoder.fit_transform(df_merge2016['Attrition'])
@@ -115,9 +111,10 @@ m_gbc = GradientBoostingClassifier()
 
 modelos=list([m_lreg,m_rtree, m_rf, m_gbc])
 
-var_names=func.sel_variables(modelos,X_train,Y,threshold="2.5*mean")
+var_names=func.sel_variables(modelos,X_train,Y,threshold="2*mean")
 var_names.shape
 
 X2=X_train[var_names] ### matriz con variables seleccionadas
 X2.info()
 X_train.info()
+
